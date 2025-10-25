@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { ExternalLink, Bot, Layers, Rocket } from 'lucide-react';
 
 const projects = [
@@ -31,6 +31,47 @@ const projects = [
   },
 ];
 
+function TiltCard({ children }) {
+  const [hovered, setHovered] = useState(false);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useTransform(y, [0, 1], [8, -8]);
+  const rotateY = useTransform(x, [0, 1], [-8, 8]);
+
+  const onMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+    x.set(px);
+    y.set(py);
+  };
+
+  return (
+    <motion.div
+      onMouseMove={onMove}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => { setHovered(false); x.set(0.5); y.set(0.5); }}
+      style={{ perspective: 1000 }}
+      className="group relative"
+    >
+      <motion.div
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+        className="relative rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6"
+      >
+        <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/10" style={{ transform: 'translateZ(20px)' }} />
+        <motion.div
+          className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-r from-fuchsia-500/0 via-fuchsia-500/10 to-amber-400/0"
+          animate={{ opacity: hovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
+        <div style={{ transform: 'translateZ(40px)' }}>
+          {children}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Projects() {
   return (
     <section id="projects" className="relative py-20">
@@ -39,20 +80,13 @@ export default function Projects() {
         <div className="flex items-end justify-between gap-6 mb-10">
           <div>
             <h2 className="text-3xl md:text-4xl font-semibold">Highlighted Projects</h2>
-            <p className="text-white/60 mt-2">Production-grade agents, RAG systems, and adaptive learning tools.</p>
+            <p className="text-white/60 mt-2">Interactive showcases of agents, RAG systems, and adaptive learning tools.</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {projects.map((p, idx) => (
-            <motion.article
-              key={p.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.45, delay: idx * 0.05 }}
-              className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6"
-            >
+            <TiltCard key={p.title}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <p.icon className="h-6 w-6 text-fuchsia-300" />
@@ -74,7 +108,7 @@ export default function Projects() {
                   <li key={pt} className="text-sm text-white/80 leading-relaxed">• {pt}</li>
                 ))}
               </ul>
-            </motion.article>
+            </TiltCard>
           ))}
         </div>
       </div>

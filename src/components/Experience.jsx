@@ -51,7 +51,7 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section className="relative py-20">
+    <section id="experience" className="relative py-20">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(700px_350px_at_50%_100%,rgba(251,146,60,0.08),transparent)]" />
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-end justify-between gap-6 mb-10">
@@ -81,7 +81,7 @@ export default function Experience() {
                 </div>
                 <div className={`order-1 sm:order-${idx % 2 === 0 ? '2' : '1'} relative`}> 
                   <div className="absolute -left-6 sm:left-[-1.125rem] top-2 h-3 w-3 rounded-full bg-gradient-to-r from-fuchsia-500 to-amber-400 shadow-[0_0_24px_rgba(255,255,255,0.35)]" />
-                  <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 hover:bg-white/10 transition">
                     <h3 className="text-xl font-medium">{exp.role} • <span className="text-white/80">{exp.org}</span></h3>
                     <ul className="mt-3 space-y-2">
                       {exp.points.map((p) => (
@@ -93,18 +93,6 @@ export default function Experience() {
               </motion.div>
             ))}
           </div>
-        </div>
-
-        <div className="mt-12 flex flex-wrap items-center gap-3">
-          <a href="#" className="inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors px-4 py-2 text-sm">
-            CSU East Bay • M.S. Computer Science
-          </a>
-          <a href="#" className="inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors px-4 py-2 text-sm">
-            Bikaner Technical University • B.Tech (GPA 8.07)
-          </a>
-          <a href="#" className="inline-flex items-center gap-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors px-4 py-2 text-sm">
-            Awards: OSCAR Scholarship, MESA Hackathon Winner, CSU East Bay Datathon 2nd Runner-Up
-          </a>
         </div>
       </div>
     </section>

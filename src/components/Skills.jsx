@@ -45,7 +45,7 @@ export default function Skills() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.4, delay: idx * 0.05 }}
-              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6"
+              className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-6 hover:translate-y-[-2px] transition"
             >
               <div className="flex items-center gap-3 mb-4">
                 <group.icon className="h-6 w-6 text-indigo-300" />
@@ -53,7 +53,7 @@ export default function Skills() {
               </div>
               <ul className="flex flex-wrap gap-2">
                 {group.items.map((item) => (
-                  <li key={item} className="text-sm text-white/80 bg-white/10 px-3 py-1.5 rounded-full">
+                  <li key={item} className="text-sm text-white/80 bg-white/10 px-3 py-1.5 rounded-full hover:bg-white/20 transition">
                     {item}
                   </li>
                 ))}
